@@ -14,7 +14,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #333;
     }
 
     .card {
@@ -25,7 +24,6 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      animation: fadeIn 1.2s ease;
     }
 
     h1 {
@@ -34,12 +32,13 @@
 
     h2 {
       color: #667eea;
-      margin-top: 30px;
+      margin-top: 25px;
     }
 
     p {
       font-size: 16px;
       line-height: 1.6;
+      color: #333;
     }
 
     img {
@@ -49,3 +48,37 @@
       margin: 15px 0;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
+
+    audio {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <audio controls loop>
+      <source src="assets/music.mp3" type="audio/mpeg">
+    </audio>
+
+    <h1>Hey Mitchel ❤️</h1>
+    <p>I made something to make you smile</p>
+
+    <h2>lemme be the first one to say this...</h2>
+
+    <img src="assets/memory1.jpg" alt="Memory 1">
+    <img src="assets/memory2.jpg" alt="Memory 2">
+    <img src="assets/memory3.jpg" alt="Memory 3">
+
+    <p>Every laugh meant something.</p>
+    <p>Another memory to treasure…</p>
+
+    <h2>Mitchel, this is for you ❤️</h2>
+    <p><strong>Happy here always!!</strong></p>
+
+  </div>
+
+</body>
+</html>
