@@ -1,133 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #ffe6ea;
-            overflow: hidden;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #ffd6e8, #ffeef6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
 
-        /* Floating hearts */
-        .heart {
-            position: absolute;
-            color: #ff4d6d;
-            font-size: 20px;
-            animation: floatUp 6s linear infinite;
-            opacity: 0.7;
-        }
+  .card {
+    text-align: center;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    z-index: 2;
+  }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(1); }
-            100% { transform: translateY(-150vh) scale(1.5); }
-        }
+  h1 {
+    font-size: 34px;
+    color: #d6336c;
+  }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(255, 100, 150, 0.3);
-            text-align: center;
-            z-index: 10;
-            width: 90%;
-            max-width: 400px;
-        }
+  h2 {
+    font-size: 26px;
+    color: #c9184a;
+    margin-bottom: 40px;
+  }
 
-        h1 {
-            color: #d6336c;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
+  .buttons {
+    position: relative;
+    height: 120px;
+  }
 
-        button {
-            background: #d6336c;
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin: 10px auto;
-            width: 100%;
-            max-width: 200px;
-        }
+  button {
+    padding: 14px 35px;
+    font-size: 18px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+  }
 
-        button:hover {
-            background: #b02555;
-            transform: scale(1.05);
-        }
+  #yes {
+    background: #ff4d6d;
+    color: white;
+    left: 50%;
+    transform: translateX(-90px);
+    box-shadow: 0 10px 20px rgba(255,77,109,0.4);
+  }
 
-        #noBtn {
-            position: relative;
-        }
+  #no {
+    background: white;
+    color: #333;
+    left: 50%;
+    transform: translateX(20px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
 
-        /* Top‑right GIF */
-        .corner-gif {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 90px;
-            height: auto;
-            z-index: 20;
-        }
+  .heart {
+    position: absolute;
+    color: rgba(255, 0, 100, 0.15);
+    animation: float 6s linear infinite;
+    z-index: 1;
+  }
 
-        @media (max-width: 500px) {
-            .corner-gif {
-                width: 70px;
-                top: 5px;
-                right: 5px;
-            }
-        }
-    </style>
+  @keyframes float {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-10vh); }
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+</style>
 </head>
 
 <body>
 
-<!-- GIF in the corner -->
-<img src="stitch.gif" class="corner-gif">
+<canvas id="fireworks"></canvas>
 
-<div class="card">
-    <h1>Orlagh, will you be my Valentine?</h1>
-    <button onclick="yes()">Yes ❤️</button>
-    <button id="noBtn" onmouseover="runAway()">No 😢</button>
+<div class="card" id="card">
+  <h1>❤️ mitchel❤️</h1>
+  <h2>Will you be my Valentine? 💖</h2>
+
+  <div class="buttons">
+    <!-- 🔥 CHANGE NO BUTTON TEXT HERE (simple way) -->
+    <button id="yes">Yes! 💕</button>
+    <button id="no">No 😤</button>
+  </div>
 </div>
 
 <script>
-    function yes() {
-        window.location.href = "yes.html";
+  const noBtn = document.getElementById('no');
+  const yesBtn = document.getElementById('yes');
+  const card = document.getElementById('card');
+
+  /* ======================================================
+     🔥 HOW TO CHANGE "NO" BUTTON TEXT (ADVANCED / VIRAL)
+     Edit the texts array below 👇
+  ====================================================== */
+
+  const noTexts = [
+    "No 😒",
+    "Are you sure? 😳",
+    "Think again 🤨",
+    "Don’t break my heart 💔",
+    "Last chance 🥺",
+    "Okay fine… NO 😈"
+  ];
+
+  let index = 0;
+
+  // No button runs away + text changes
+  noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * 250 - 125;
+    const y = Math.random() * 200 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    // 🔥 text changes automatically
+    noBtn.textContent = noTexts[index % noTexts.length];
+    index++;
+  });
+
+  /* Floating hearts */
+  for (let i = 0; i < 25; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.innerHTML = '❤️';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (12 + Math.random() * 24) + 'px';
+    h.style.animationDuration = (3 + Math.random() * 5) + 's';
+    document.body.appendChild(h);
+  }
+
+  /* Fireworks */
+  const canvas = document.getElementById('fireworks');
+  const ctx = canvas.getContext('2d');
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  function firework(x, y) {
+    const parts = [];
+    for (let i = 0; i < 80; i++) {
+      parts.push({
+        x, y,
+        a: Math.random() * Math.PI * 2,
+        s: Math.random() * 6 + 2,
+        alpha: 1
+      });
     }
 
-    function runAway() {
-        const btn = document.getElementById("noBtn");
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
-        btn.style.position = "absolute";
-        btn.style.left = x + "px";
-        btn.style.top = y + "px";
+    function animate() {
+      ctx.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      parts.forEach(p => {
+        p.x += Math.cos(p.a) * p.s;
+        p.y += Math.sin(p.a) * p.s;
+        p.alpha -= 0.02;
+
+        ctx.fillStyle = `rgba(255, ${Math.random()*150}, ${Math.random()*200}, ${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      if (parts[0].alpha > 0) requestAnimationFrame(animate);
     }
+    animate();
+  }
 
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-        document.body.appendChild(heart);
+  function startFireworks() {
+    let i = 0;
+    const interval = setInterval(() => {
+      firework(
+        Math.random() * canvas.width,
+        Math.random() * (canvas.height / 2)
+      );
+      i++;
+      if (i > 10) clearInterval(interval);
+    }, 400);
+  }
 
-        setTimeout(() => heart.remove(), 6000);
-    }
+  yesBtn.addEventListener('click', () => {
+    card.innerHTML = `
+      <h1>YAYYYY!! ❤️🎉</h1>
+      <h2>You’re my Valentine 💘</h2>
+    `;
+    startFireworks();
+  });
 
-    setInterval(createHeart, 500);
+  window.onresize = () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  };
 </script>
 
 </body>
