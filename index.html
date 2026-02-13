@@ -3,169 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Mitchel</title>
+    <title>mitchel</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --accent: #ff0a54;
-            --soft-glow: #ffccd5;
-            --deep-rose: #800e13;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Montserrat:wght@200;400&display=swap');
 
         body {
             margin: 0;
+            background: #0a0000;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: #fff5f6;
-            font-family: 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
-            transition: background 1.5s ease;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        #valentine-card {
-            background: white;
-            padding: 50px 30px;
-            border-radius: 30px;
-            box-shadow: 0 25px 70px rgba(255, 10, 84, 0.15);
+        /* Subtle smoke/glow effect */
+        .bg-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #450000 0%, #000000 80%);
+            z-index: -1;
+        }
+
+        #the-invitation {
             text-align: center;
-            width: 85%;
-            max-width: 420px;
-            border: 1px solid #ffe5ec;
-            z-index: 10;
+            padding: 40px;
+            max-width: 500px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 100px rgba(138, 3, 3, 0.4);
+            border-radius: 5px;
         }
 
-        h1 { color: var(--accent); font-size: 2rem; margin-top: 0; }
-        p { color: #555; font-size: 1.1rem; line-height: 1.5; }
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 8px;
+            background: linear-gradient(to bottom, #d4af37, #fefae0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        .btn-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 35px;
+        .eyes-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: #ffcccc;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        .btn-box {
+            margin-top: 50px;
+            position: relative;
+            height: 150px;
         }
 
         button {
-            padding: 18px;
-            font-size: 1.1rem;
-            border-radius: 15px;
-            border: none;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: 0.5s;
         }
 
         #yes-btn {
-            background: var(--accent);
+            background: #8a0303;
             color: white;
-            box-shadow: 0 8px 20px rgba(255, 10, 84, 0.3);
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(138, 3, 3, 0.8);
+            border-radius: 2px;
+        }
+
+        #yes-btn:hover {
+            background: #d90429;
+            box-shadow: 0 0 40px #ff0000;
         }
 
         #no-btn {
-            background: #fdf0f0;
-            color: var(--accent);
-            border: 1px solid #ffccd5;
+            background: transparent;
+            color: #555;
+            border: 1px solid #333;
+            padding: 10px 30px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        /* Surprise Styling */
-        #praise-content {
+        /* Surprise Section */
+        #praise-overlay {
             display: none;
-            opacity: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 100;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 2s;
         }
 
-        .beauty-text {
-            color: var(--deep-rose);
-            font-size: 1.4rem;
-            line-height: 1.7;
-            font-style: italic;
-            margin: 20px 0;
+        .sexy-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            line-height: 1.6;
+            max-width: 80%;
+            color: #f8f9fa;
         }
 
-        .surprise-emoji { font-size: 4rem; display: block; margin-bottom: 10px; }
+        .highlight-gold {
+            color: #d4af37;
+            text-shadow: 0 0 10px var(--gold);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Background Music Control */
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 5px 10px;
+            font-size: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <div id="valentine-card">
-        <div id="question-area">
-            <span style="font-size: 3rem;">🌹</span>
-            <h1>mitchel...</h1>
-            <p>I have a very important question. Will you be my Valentine?</p>
-            
-            <div class="btn-stack">
-                <button id="yes-btn" onclick="revealPraise()">YES, I'D LOVE TO!</button>
-                <button id="no-btn" onclick="handleNo()">NO</button>
-            </div>
-        </div>
+    <div class="bg-glow"></div>
 
-        <div id="praise-content">
-            <span class="surprise-emoji">✨</span>
-            <h1>My Beautiful Valentine</h1>
-            <div class="beauty-text">
-                "mitchel, I'm convinced the word <b>stunning</b> was invented just for you. Your beauty is effortless, your smile is captivating, and your heart is even more radiant than your glow nakupenda lalu."
-            </div>
-            <p>Thank you for making my world so much more beautiful just by being in it.</p>
-            <div style="font-size: 1.5rem; margin-top: 20px;">❤️ 🌹 ❤️</div>
+    <button id="music-btn" onclick="toggleMusic()">🎵 Toggle Atmosphere</button>
+
+    <div id="the-invitation">
+        <h1>MITCHEL</h1>
+        <div class="eyes-quote">I’m lost in your gaze...</div>
+        
+        <div class="btn-box">
+            <button id="yes-btn" onclick="makeItDramatic()">Yes, I'm Yours</button>
+            <button id="no-btn" onmouseover="teaseKaima()">No</button>
         </div>
     </div>
 
+    <div id="praise-overlay">
+        <div style="font-size: 4rem; margin-bottom: 20px;">🌹</div>
+        <div class="sexy-text">
+            "mitchel, your beauty is a <span class="highlight-gold">sinful masterpiece</span>. 
+            But it’s those <span class="highlight-gold">magnetic eyes</span> of yours... 
+            one look and I’m completely under your spell. 
+            <br><br>
+            You are intoxicating. 
+            Be mine, tonight and always."
+        </div>
+        <div style="font-family: 'Cinzel Decorative'; color: #d4af37; margin-top: 40px; font-size: 1.5rem;">Happy Valentine's Day, Queen.</div>
+    </div>
+
     <script>
-        let stage = 0;
-        const noResponses = [
-            "Are you sure? You're way too gorgeous to say no.",
-            "Wait... even your 'No' is beautiful. Try again?",
-            "Look, I can't let someone this breathtaking walk away.",
-            "Okay, fine. Your beauty has officially broken this button."
-        ];
+        let teaseCount = 0;
+        const messages = ["You sure?", "Look at me...", "Impossible.", "Don't fight it.", "I win."];
 
-        function handleNo() {
-            const noBtn = document.getElementById('no-btn');
-            const yesBtn = document.getElementById('yes-btn');
-
-            if (stage < noResponses.length) {
-                noBtn.innerHTML = noResponses[stage];
-                
-                // Make the Yes button grow bigger and more exciting
-                let currentScale = 1 + (stage * 0.15);
-                yesBtn.style.transform = `scale(${currentScale})`;
-                yesBtn.style.backgroundColor = (stage % 2 === 0) ? '#ff4d6d' : '#ff0a54';
-                
-                stage++;
+        function teaseKaima() {
+            const btn = document.getElementById('no-btn');
+            // Move to random spot
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            if(teaseCount < messages.length) {
+                btn.innerText = messages[teaseCount];
+                teaseCount++;
             } else {
-                // The final "No" becomes a Yes
-                noBtn.innerHTML = "YES (Because I'm undeniably stunning)";
-                noBtn.style.background = "var(--accent)";
-                noBtn.style.color = "white";
-                noBtn.onclick = revealPraise;
+                btn.style.display = 'none'; // Give up
             }
         }
 
-        function revealPraise() {
-            // Animation for transition
-            document.getElementById('question-area').style.display = 'none';
-            const praise = document.getElementById('praise-content');
-            praise.style.display = 'block';
+        function makeItDramatic() {
+            document.getElementById('the-invitation').style.display = 'none';
+            document.getElementById('praise-overlay').style.display = 'flex';
             
-            setTimeout(() => {
-                praise.style.opacity = '1';
-                document.body.style.background = '#ffccd5';
-            }, 50);
-
-            // Heart Confetti Surprise
-            const end = Date.now() + (4 * 1000);
-            const colors = ['#ff0a54', '#ff4d6d', '#ffffff', '#ffccd5'];
+            // Dramatic Gold & Blood-Red Confetti
+            var end = Date.now() + (6 * 1000);
+            var colors = ['#d4af37', '#8a0303', '#000000'];
 
             (function frame() {
                 confetti({
-                    particleCount: 3,
+                    particleCount: 2,
                     angle: 60,
                     spread: 55,
                     origin: { x: 0 },
                     colors: colors
                 });
                 confetti({
-                    particleCount: 3,
+                    particleCount: 2,
                     angle: 120,
                     spread: 55,
                     origin: { x: 1 },
@@ -176,6 +221,15 @@
                     requestAnimationFrame(frame);
                 }
             }());
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            if(music) {
+                return music.paused ? music.play() : music.pause();
+            } else {
+                alert("Add a song link in the code to play music!");
+            }
         }
     </script>
 </body>
