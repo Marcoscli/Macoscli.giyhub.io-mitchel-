@@ -1,219 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Be My Valentine ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-# 💘 Happy Valentine’s Day 💘
-
-<p align="center">
-  <img src="heart1.png" 
-  <img src="heart2.png" 
-  <img src="heart3.png" 
-</p>
-
-<style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(180deg, #ffd6e8, #ffeef6);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .card {
-    text-align: center;
-    padding: 30px;
-    max-width: 400px;
-    width: 90%;
-    z-index: 2;
-  }
-
-  h1 {
-    font-size: 34px;
-    color: #d6336c;
-  }
-
-  h2 {
-    font-size: 26px;
-    color: #c9184a;
-    margin-bottom: 40px;
-  }
-
-  .buttons {
-    position: relative;
-    height: 120px;
-  }
-
-  button {
-    padding: 14px 35px;
-    font-size: 18px;
-    border-radius: 40px;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-  }
-
-  #yes {
-    background: #ff4d6d;
-    color: white;
-    left: 50%;
-    transform: translateX(-90px);
-    box-shadow: 0 10px 20px rgba(255,77,109,0.4);
-  }
-
-  #no {
-    background: white;
-    color: #333;
-    left: 50%;
-    transform: translateX(20px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  }
-
-  .heart {
-    position: absolute;
-    color: rgba(255, 0, 100, 0.15);
-    animation: float 6s linear infinite;
-    z-index: 1;
-  }
-
-  @keyframes float {
-    0% { transform: translateY(100vh); }
-    100% { transform: translateY(-10vh); }
-  }
-
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #ffdde1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container { text-align: center; }
+        #yesBtn { transition: all 0.2s ease-in-out; }
+    </style>
 </head>
-
 <body>
 
-<canvas id="fireworks"></canvas>
+    <div class="container p-4">
+        <img id="imageDisplay" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v0Yaf6f6bVpS53QW01/giphy.gif" 
+             alt="Cute Bear" class="mx-auto w-64 h-64 mb-6">
 
-<div class="card" id="card">
-  <h1>❤️ mitchel❤️</h1>
-  <h2>Will you be my Valentine? 💖</h2>
+        <h1 id="question" class="text-3xl font-bold text-[#d32f2f] mb-8">Will you be my Valentine?</h1>
 
-  <div class="buttons">
-    <!-- 🔥 CHANGE NO BUTTON TEXT HERE (simple way) -->
-    <button id="yes">Yes! 💕</button>
-    <button id="no">No 😤</button>
-  </div>
-</div>
+        <div class="flex justify-center items-center gap-4" id="buttons">
+            <button id="yesBtn" onclick="celebrate()" 
+                class="bg-[#4caf50] text-white px-8 py-3 rounded-md font-bold text-lg shadow-lg">
+                Yes
+            </button>
+            <button id="noBtn" onclick="handleNo()" 
+                class="bg-[#f44336] text-white px-8 py-3 rounded-md font-bold text-lg shadow-lg">
+                No
+            </button>
+        </div>
+    </div>
 
-<script>
-  const noBtn = document.getElementById('no');
-  const yesBtn = document.getElementById('yes');
-  const card = document.getElementById('card');
+    <script>
+        let noCount = 0;
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const imageDisplay = document.getElementById('imageDisplay');
+        const question = document.getElementById('question');
 
-  /* ======================================================
-     🔥 HOW TO CHANGE "NO" BUTTON TEXT (ADVANCED / VIRAL)
-     Edit the texts array below 👇
-  ====================================================== */
+        const phrases = [
+            "No", "Are you sure?", "Really sure??", "Think again!", "Last chance!",
+            "Surely not?", "You might regret this!", "Give it another thought!",
+            "Are you absolutely sure?", "This could be a mistake!", "Have a heart!",
+            "Don't be so cold!", "Change of mind?", "Is that your final answer?",
+            "You're breaking my heart ;("
+        ];
 
-  const noTexts = [
-    "No 😒",
-    "Are you sure? 😳",
-    "Think again 🤨",
-    "Don’t break my heart 💔",
-    "Last chance 🥺",
-    "Okay fine… NO 😈"
-  ];
+        function handleNo() {
+            noCount++;
+            // Cycle through phrases
+            noBtn.innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            
+            // Increase Yes button size
+            const currentSize = noCount * 20 + 18; // Logic to grow button
+            yesBtn.style.fontSize = `${currentSize}px`;
+            yesBtn.style.padding = `${currentSize/2}px ${currentSize}px`;
 
-  let index = 0;
+            // Change image to "sad" bear
+            imageDisplay.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/T2971578332155/giphy.gif";
+        }
 
-  // No button runs away + text changes
-  noBtn.addEventListener('mouseover', () => {
-    const x = Math.random() * 250 - 125;
-    const y = Math.random() * 200 - 100;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-
-    // 🔥 text changes automatically
-    noBtn.textContent = noTexts[index % noTexts.length];
-    index++;
-  });
-
-  /* Floating hearts */
-  for (let i = 0; i < 25; i++) {
-    const h = document.createElement('div');
-    h.className = 'heart';
-    h.innerHTML = '❤️';
-    h.style.left = Math.random() * 100 + 'vw';
-    h.style.fontSize = (12 + Math.random() * 24) + 'px';
-    h.style.animationDuration = (3 + Math.random() * 5) + 's';
-    document.body.appendChild(h);
-  }
-
-  /* Fireworks */
-  const canvas = document.getElementById('fireworks');
-  const ctx = canvas.getContext('2d');
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  function firework(x, y) {
-    const parts = [];
-    for (let i = 0; i < 80; i++) {
-      parts.push({
-        x, y,
-        a: Math.random() * Math.PI * 2,
-        s: Math.random() * 6 + 2,
-        alpha: 1
-      });
-    }
-
-    function animate() {
-      ctx.fillStyle = 'rgba(0,0,0,0.15)';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      parts.forEach(p => {
-        p.x += Math.cos(p.a) * p.s;
-        p.y += Math.sin(p.a) * p.s;
-        p.alpha -= 0.02;
-
-        ctx.fillStyle = `rgba(255, ${Math.random()*150}, ${Math.random()*200}, ${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
-        ctx.fill();
-      });
-
-      if (parts[0].alpha > 0) requestAnimationFrame(animate);
-    }
-    animate();
-  }
-
-  function startFireworks() {
-    let i = 0;
-    const interval = setInterval(() => {
-      firework(
-        Math.random() * canvas.width,
-        Math.random() * (canvas.height / 2)
-      );
-      i++;
-      if (i > 10) clearInterval(interval);
-    }, 400);
-  }
-
-  yesBtn.addEventListener('click', () => {
-    card.innerHTML = `
-      <h1>YAYYYY!! ❤️🎉</h1>
-      <h2>You’re my Valentine 💘</h2>
-    `;
-    startFireworks();
-  });
-
-  window.onresize = () => {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-  };
-</script>
-
+        function celebrate() {
+            question.innerText = "Yay!!! ❤️";
+            // Success GIF
+            imageDisplay.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93ZHpueG93JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/UMon0WU1m668uOAL9P/giphy.gif";
+            // Hide buttons
+            document.getElementById('buttons').classList.add('hidden');
+        }
+    </script>
 </body>
-</html>
+              </html>
